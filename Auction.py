@@ -1,17 +1,15 @@
 
 import random
 start = 20
-clock = start
-increment = 1
+inc = 1
 n = 5
-bidders = []
 lowbound = 20
 ubound = 40
 
 def initBidders(size,bidlist,a,b):
   for i in size:
     bidlist.append(random.unif(a,b))
-  return bidlist
+  return (clock,bidlist)
 
 def auctionRound(clock,increment,bidlist):
   if len(bidlist == 1):
@@ -26,3 +24,11 @@ def auctionRound(clock,increment,bidlist):
       if p < clock:
         bidlist.remove(p)
     return (clock,bidlist)
+
+def runAuction(start,increment,size,a,b):
+   clock = start
+   bidlist = []
+   initBidders(size,bidlist,a,b)
+   while len(bidlist > 1):
+    (clock,bidlist) = auctionRound(clock,increment,bidlist)
+   return clock
