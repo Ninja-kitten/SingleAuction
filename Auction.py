@@ -14,15 +14,15 @@ def initBidders(size,bidlist,a,b):
   return bidlist
 
 def auctionRound(clock,increment,bidlist):
+  if len(bidlist == 1):
+    return(clock,bidlist)
   #if the incrementing won't be take it over
-  if clock+increment > sorted(bidlist)[-1]:
-    return clock
+  elif clock+increment > sorted(bidlist)[-1]:
+    return (clock,[sorted(bidlist)[-1]])
   #if the increment won't screw you over let's do this auciton
   else:
-    #see if the clock is already past the second place
-    if clock > sorted(bidlist)[-2]:
-      return clock
-    else:
-      clock += increment
-      return clock
-    
+    clock += increment
+    for p in bidlist:
+      if p < clock:
+        bidlist.remove(p)
+    return (clock,bidlist)
