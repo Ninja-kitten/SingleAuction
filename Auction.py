@@ -13,17 +13,16 @@ def initBidders(size,bidlist,a,b):
     bidlist.append(random.unif(a,b))
   return bidlist
 
-
-
-
-#value tie  
-if sorted(bidders)[-1]== sorted(bidders)[-2]:
-  if n == 2:
-    while clock+increment < bidders[0]:
-      clock += increment
+def auctionRound(clock,increment,bidlist):
+  #if the incrementing won't be take it over
+  if clock+increment > sorted(bidlist)[-1]:
+    return clock
+  #if the increment won't screw you over let's do this auciton
   else:
-    while clock <= sorted(bidders)[-3]:
+    #see if the clock is already past the second place
+    if clock > sorted(bidlist)[-2]:
+      return clock
+    else:
       clock += increment
-else:
-  while clock < sorted(bidders)[-2]:
-    clock+= increment
+      return clock
+    
